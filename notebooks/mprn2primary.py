@@ -3,7 +3,7 @@ import pathlib
 
 inpath = pathlib.Path("../data/SDCC - MPRN Consumption (2020) -V1.csv")
 outpath = pathlib.Path("../data/mprn_total_primary_energy_requirement.csv")
-total_final_consumption_to_total_primary_requirement = 1.1
+total_final_consumption_to_total_primary_requirement = 1.830256781
 year = "2020"
 
 def drop_commas_in_numeric_columns(s: pd.Series) -> pd.Series:
