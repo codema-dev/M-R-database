@@ -1,8 +1,12 @@
 import pandas as pd
 import pathlib
 
+# + tags=["parameters"]
+upstream = None
+product = {"nb": "output/mprn2primary.ipynb", "data": "output/mprn_tper_2020.csv"}
+# -
+
 inpath = pathlib.Path("../data/SDCC - MPRN Consumption (2020) -V1.csv")
-outpath = pathlib.Path("../data/mprn_total_primary_energy_requirement.csv")
 total_final_consumption_to_total_primary_requirement = 1.830256781
 year = "2020"
 
@@ -25,4 +29,4 @@ mprn = (
     .astype("float64")
 ) * total_final_consumption_to_total_primary_requirement
 
-mprn[year].to_csv(outpath)
+mprn[year].to_csv(product["data"])
