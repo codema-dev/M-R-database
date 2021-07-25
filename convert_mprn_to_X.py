@@ -6,8 +6,14 @@ upstream = None
 product = {"nb": "output/mprn2primary.ipynb", "data": "output/mprn_tper_2020.csv"}
 # -
 
-inpath = pathlib.Path("../data/SDCC - MPRN Consumption (2020) -V1.csv")
-total_final_consumption_to_total_primary_requirement = 1.830256781
+inpath = pathlib.Path("data/SDCC - MPRN Consumption (2020) -V1.csv")#
+
+##Conversion Factors
+total_final_consumption_to_total_primary_requirement = 1.1
+total_final_consumption_to_co2 = 0.3314
+
+##Cost Table
+
 year = "2020"
 
 
@@ -27,6 +33,9 @@ mprn = (
     .drop(columns=columns_to_drop)
     .apply(drop_commas_in_numeric_columns, axis="columns")
     .astype("float64")
-) * total_final_consumption_to_total_primary_requirement
+) 
+
+mprn_tper = mprn * total_final_consumption_to_total_primary_requirement
+mprn_co2 = mprn * total_final_consumption_to_co2
 
 mprn[year].to_csv(product["data"])
