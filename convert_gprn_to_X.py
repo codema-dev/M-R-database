@@ -6,8 +6,13 @@ upstream = None
 product = {"nb": "output/gprn2primary.ipynb", "data": "output/gprn_tper_2020.csv"}
 # -
 
-inpath = pathlib.Path("../data/SDCC - GPRN Consumption (2020)-V1.csv")
+inpath = pathlib.Path("..data/SDCC - GPRN Consumption (2020)-V1.csv")
+##Conversion Factors
 total_final_consumption_to_total_primary_requirement = 1.1
+total_final_consumption_to_co2 = 0.2047
+#Figure out hw to add the cost tables
+
+
 year = "2020"
 read_from_row = 24
 
