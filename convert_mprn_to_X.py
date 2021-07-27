@@ -34,8 +34,13 @@ mprn = (
     .apply(drop_commas_in_numeric_columns, axis="columns")
     .astype("float64")
 ) 
+mprn_recent = mprn.iloc[:, 0]
+mprn_recent.columns = ['TFC(kwh)']
 
-mprn_tper = mprn * total_final_consumption_to_total_primary_requirement
-mprn_co2 = mprn * total_final_consumption_to_co2
+#mprn_recent['TFC(kwh)'] = mprn_recent[0]
+#mprn_recent['TPER(kwh)'] = mprn_recent['TFC(kwh)'] * total_final_consumption_to_total_primary_requirement
+#mprn_recent['CO2(kg)'] = mprn_recent['TFC(kwh)'] * total_final_consumption_to_co2
+
+mprn_recent
 
 mprn[year].to_csv(product["data"])
