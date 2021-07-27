@@ -1,3 +1,4 @@
+from cost_table import cost_table_gas
 import pandas as pd
 import pathlib
 
@@ -6,11 +7,10 @@ upstream = None
 product = {"nb": "output/gprn2primary.ipynb", "data": "output/gprn_tper_2020.csv"}
 # -
 
-inpath = pathlib.Path("..data/SDCC - GPRN Consumption (2020)-V1.csv")
+inpath = pathlib.Path("data/SDCC - GPRN Consumption (2020)-V1.csv")
 ##Conversion Factors
 total_final_consumption_to_total_primary_requirement = 1.1
 total_final_consumption_to_co2 = 0.2047
-#Figure out hw to add the cost tables
 
 
 year = "2020"
@@ -35,6 +35,17 @@ gprn = (
     .drop(columns=columns_to_drop)
     .apply(drop_commas_in_numeric_columns, axis="columns")
     .astype("float64")
-) * total_final_consumption_to_total_primary_requirement
+) #* total_final_consumption_to_total_primary_requirement
 
-gprn[year].to_csv(product["data"])
+gprn_recent = pd.DataFrame(gprn.iloc[:, 0])
+gprn_recent.columns = ['TFC(kwh)']
+gprn_recent['TPER(kwh)'] = gprn_recent['TFC(kwh)'] * total_final_consumption_to_total_primary_requirement
+gprn_recent['CO2(kg)'] = gprn_recent['TFC(kwh)'] * total_final_consumption_to_co2
+gprn_recent['Cost (Euro/kwh)'] = gprn_recent['TFC(kwh)'].apply(cost_table_gas)#, axis = 'columns')
+
+gprn_recent['Euro'] = gprn_recent['TFC(kwh)'] * gprn_recent['Cost (Euro/kwh)']
+gprn_recent
+
+
+
+#gprn[year].to_csv(product["data"])
